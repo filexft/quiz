@@ -10,67 +10,7 @@ interface responseData {
 }
 
 export default function Gender() {
-    const [resData, setResData] = useState<responseData | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null | unknown>(null);
-    const [fetchReq, setFetchReq] = useState<boolean>(false);
-
-    const wordUsageFrequency = ["uf", "vf", "fu", "ou"] as const;
-
-    useEffect(() => {
-        let randomFreq =
-            wordUsageFrequency[
-                Math.floor(wordUsageFrequency.length * Math.random())
-            ];
-
-        console.log("random fer<: ", randomFreq);
-        if (fetchReq) {
-            const getNewQuizSet = async () => {
-                setIsLoading(true);
-                setError(null);
-                try {
-                    const res = await fetch("/api/gender/random", {
-                        method: "POST",
-                        body: JSON.stringify({
-                            freq: randomFreq,
-                        }),
-                    });
-                    if (!res.ok) {
-                        throw new Error("Failed to get new Quiz Set ");
-                    }
-                    const data = await res.json();
-                    setResData(data);
-                    // console.log("Quiz list -----:", resData);
-                    console.log("Quiz list Second -----:", data);
-                } catch (err) {
-                    console.log(err);
-                    setError(err);
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-            getNewQuizSet();
-            setFetchReq(false);
-        }
-    }, [fetchReq]);
-
-    return (
-        <div className="flex flex-col h-screen   justify-center items-center">
-            <div>
-                <Button
-                    onClick={() => setFetchReq(true)}
-                    className="bg-blue-500 hover:bg-blue-700"
-                >
-                    New Quiz Set
-                </Button>
-            </div>
-            {resData && resData.data ? (
-                <QuizList nomsList={resData.data} restartQuiz={setFetchReq} />
-            ) : (
-                <p>no quiz</p>
-            )}
-        </div>
-    );
+    return <h3>Gender</h3>;
 }
 
 /**
