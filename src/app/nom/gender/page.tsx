@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Noms } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import QuizList from "@/components/quiz/singleChoise";
