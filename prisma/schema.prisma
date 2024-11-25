@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+//['ortho', 'phon', 'lemme', 'cgram', 'genre', 'nombre', 'freqlemfilms2', 'freqlemlivres', 'freqfilms2', 'freqlivres', 'infover', 'nbhomogr',
+//  'nbhomoph', 'islem', 'nblettres', 'nbphons', 'cvcv', 'p_cvcv', 'voisorth', 'voisphon', 'puorth', 'puphon', 'syll', 'nbsyll', 'cv-cv',
+//  'orthrenv', 'phonrenv', 'orthosyll', 'cgramortho', 'deflem', 'defobs', 'old20', 'pld20', 'morphoder', 'nbmorph']
+
+
+model noms {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  ortho          String  // The written form of the word
+  phon           String? // Phonetic transcription (optional, as it may be absent)
+  lemme          String  // The lemma (canonical form) of the word
+  cgram          String  // Grammatical category
+  genre          String? // Gender (e.g., 'f' or 'm')
+  nombre         String? // Number (e.g., 's' or 'p')
+  freqlemfilms2  Float?  // Lemma frequency in films
+  freqlemlivres  Float?  // Lemma frequency in books
+  freqfilms2     Float?  // Word frequency in films
+  freqlivres     Float?  // Word frequency in books
+  infover        String? // Verb-specific information (optional)
+  nbhomogr       Int?    // Number of homographs
+  nbhomoph       Int?    // Number of homophones
+  islem          Int // Indicates if the word is a lemma (1 = true, 0 = false)
+  nblettres      Int     // Number of letters in the word
+  nbphons        Int?    // Number of phonemes
+  cvcv           String? // CV structure (e.g., CVCV or CCVCV)
+  p_cvcv         String? // Simplified phonetic pattern
+  voisorth       Int?    // Orthographic neighborhood
+  voisphon       Int?    // Phonetic neighborhood
+  puorth         Int?    // Orthographic strength
+  puphon         Int?    // Phonetic strength
+  syll           String? // Syllabification
+  nbsyll         Int?    // Number of syllables
+  cv_cv          String? // Syllabic structure
+  orthrenv       String? // Reversed orthography
+  phonrenv       String? // Reversed phonetics
+  orthosyll      String? // Orthography broken into syllables
+  cgramortho     String? // Orthographic grammatical category
+  deflem         Int? // Lemma definition
+  defobs         Int? // Observed definition
+  old20          Float?  // Orthographic Levenshtein Distance (OLD20)
+  pld20          Float?  // Phonetic Levenshtein Distance (PLD20)
+  morphoder      String? // Morphological derivation
+  nbmorph        Int?    // Number of morphemes
+}
