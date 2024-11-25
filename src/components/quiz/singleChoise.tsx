@@ -4,13 +4,18 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Noms } from "@/lib/types";
 
-export default function QuizList({ nomsList }: { nomsList: Noms[] }) {
+export default function QuizList({
+    nomsList,
+    restartQuiz,
+}: {
+    nomsList: Noms[];
+    restartQuiz: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
     const [score, setScore] = useState(0);
     const [numbrequiz, setNumbrequiz] = useState(0);
     const [endQuiz, setEndQuiz] = useState(false);
 
     const handleChoise = (val: string) => {
-        console.log("Numqui  :", numbrequiz);
         if (nomsList[numbrequiz].genre == val) {
             setScore(score + 1);
         }
@@ -21,18 +26,30 @@ export default function QuizList({ nomsList }: { nomsList: Noms[] }) {
         console.log(numbrequiz);
     };
 
-    console.log("Inside Quile List :", nomsList);
+    const restartGame = () => {
+        setEndQuiz(false);
+        setNumbrequiz(0);
+        setScore(0);
+        restartQuiz(true);
+    };
+
     return (
-        <div>
+        <div className="flex flex-col gap-3  my-5">
             <h4>
                 current quiz : {numbrequiz} / {nomsList.length}
             </h4>
-            <p>
-                numqui : {numbrequiz}, end : {true : "true" : }
-            </p>
-            {endQuiz ? (
+            <Button className="bg-green-400" onClick={restartGame}>
+                Restart
+            </Button>
+            <p></p>
+            {!endQuiz ? (
                 <div>
-                    <p>{nomsList[numbrequiz].lemme}</p>
+                    <h4>
+                        You score : {score} / {nomsList.length}
+                    </h4>
+                    <p className="text-5xl text-center my-3">
+                        {nomsList[numbrequiz].lemme}
+                    </p>
                     <div className="flex gap-3">
                         <Button
                             onClick={() => handleChoise("m")}

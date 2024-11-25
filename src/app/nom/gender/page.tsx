@@ -15,7 +15,15 @@ export default function Gender() {
     const [error, setError] = useState<string | null | unknown>(null);
     const [fetchReq, setFetchReq] = useState<boolean>(false);
 
+    const wordUsageFrequency = ["uf", "vf", "fu", "ou"] as const;
+
     useEffect(() => {
+        let randomFreq =
+            wordUsageFrequency[
+                Math.floor(wordUsageFrequency.length * Math.random())
+            ];
+
+        console.log("random fer<: ", randomFreq);
         if (fetchReq) {
             const getNewQuizSet = async () => {
                 setIsLoading(true);
@@ -24,7 +32,7 @@ export default function Gender() {
                     const res = await fetch("/api/gender/random", {
                         method: "POST",
                         body: JSON.stringify({
-                            freq: "vf",
+                            freq: randomFreq,
                         }),
                     });
                     if (!res.ok) {
@@ -32,8 +40,8 @@ export default function Gender() {
                     }
                     const data = await res.json();
                     setResData(data);
-
-                    console.log("Quiz list -----:", resData);
+                    // console.log("Quiz list -----:", resData);
+                    console.log("Quiz list Second -----:", data);
                 } catch (err) {
                     console.log(err);
                     setError(err);
@@ -44,10 +52,10 @@ export default function Gender() {
             getNewQuizSet();
             setFetchReq(false);
         }
-    }, [fetchReq, resData]);
+    }, [fetchReq]);
 
     return (
-        <div>
+        <div className="flex flex-col h-screen   justify-center items-center">
             <div>
                 <Button
                     onClick={() => setFetchReq(true)}
@@ -57,7 +65,7 @@ export default function Gender() {
                 </Button>
             </div>
             {resData && resData.data ? (
-                <QuizList nomsList={resData.data} />
+                <QuizList nomsList={resData.data} restartQuiz={setFetchReq} />
             ) : (
                 <p>no quiz</p>
             )}
