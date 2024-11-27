@@ -53,6 +53,7 @@ export default function Gender() {
                 } catch (err) {
                     console.log(err);
                     setError(err);
+                    console.log(error)
                 } finally {
                     setIsLoading(false);
                 }
@@ -73,7 +74,7 @@ export default function Gender() {
                 </Button>
             </div>
             {resData && resData.data ? (
-                <QuizList nomsList={resData.data} restartQuiz={setFetchReq} />
+                !isLoading && <QuizList nomsList={resData.data} restartQuiz={setFetchReq} />
             ) : (
                 <p>no quiz</p>
             )}
