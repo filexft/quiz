@@ -19,23 +19,24 @@ export default function Gender() {
     const wordUsageFrequency = ["uf", "vf", "fu", "ou"] as const;
 
     useEffect(() => {
-        const currentrandomFreq =
-            wordUsageFrequency[
-                Math.floor(wordUsageFrequency.length * Math.random())
-            ];
-
         // setRandomFreq(currentrandomFreq);
 
-        console.log("random fer: ", currentrandomFreq);
         if (fetchReq) {
             const getNewQuizSet = async () => {
                 setIsLoading(true);
                 setError(null);
                 try {
+                    const currentrandomFreq =
+                        wordUsageFrequency[
+                            Math.floor(
+                                wordUsageFrequency.length * Math.random()
+                            )
+                        ];
+
                     const res = await fetch("/api/gender/random", {
                         method: "POST",
                         body: JSON.stringify({
-                            freq: randomFreq,
+                            freq: currentrandomFreq,
                         }),
                     });
                     if (!res.ok) {
@@ -55,7 +56,7 @@ export default function Gender() {
             getNewQuizSet();
             setFetchReq(false);
         }
-    }, [fetchReq]);
+    }, [fetchReq, wordUsageFrequency]);
 
     return (
         <div className="flex flex-col h-screen   justify-center items-center">
