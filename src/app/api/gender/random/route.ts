@@ -31,7 +31,8 @@ export async function POST(request: Request) {
             },
         });
 
-        const skip = Math.floor(Math.random() * wordsCount);
+        const skip =
+            wordsCount > 0 ? Math.floor(Math.random() * wordsCount) : 0;
         console.log(wordFreq, " ---- ", wordsCount, " ---- ", skip);
         const data = await prisma.noms.findMany({
             where: {
