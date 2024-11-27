@@ -14,11 +14,8 @@ export default function Gender() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null | unknown>(null);
     const [fetchReq, setFetchReq] = useState<boolean>(false);
-    // const [randomFreq, setRandomFreq] = useState(null);
 
     useEffect(() => {
-        // setRandomFreq(currentrandomFreq);
-
         if (fetchReq) {
             const getNewQuizSet = async () => {
                 setIsLoading(true);
@@ -44,6 +41,7 @@ export default function Gender() {
                         }),
                     });
                     if (!res.ok) {
+                        console.log("Res isn't ok");
                         throw new Error("Failed to get new Quiz Set ");
                     }
                     const data = await res.json();
@@ -53,7 +51,7 @@ export default function Gender() {
                 } catch (err) {
                     console.log(err);
                     setError(err);
-                    console.log(error)
+                    console.log(error);
                 } finally {
                     setIsLoading(false);
                 }
@@ -61,7 +59,7 @@ export default function Gender() {
             getNewQuizSet();
             setFetchReq(false);
         }
-    }, [fetchReq]);
+    }, [error, fetchReq]);
 
     return (
         <div className="flex flex-col h-screen   justify-center items-center">
@@ -74,7 +72,12 @@ export default function Gender() {
                 </Button>
             </div>
             {resData && resData.data ? (
-                !isLoading && <QuizList nomsList={resData.data} restartQuiz={setFetchReq} />
+                !isLoading && (
+                    <QuizList
+                        nomsList={resData.data}
+                        restartQuiz={setFetchReq}
+                    />
+                )
             ) : (
                 <p>no quiz</p>
             )}

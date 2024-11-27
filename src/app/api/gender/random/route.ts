@@ -13,21 +13,17 @@ export async function POST(request: Request) {
         };
 
         const req = await request.json();
-        const freq: string | undefined = req?.freq;
+        const freq: string = req?.freq || "fu";
 
         const quizNum =
             req?.quizNum && [10, 20, 30].includes(req?.quizNum)
                 ? req?.quizNum
                 : 10;
 
-        let wordFreq =
+        const wordFreq =
             freq && freq in wordUsageFrequency
-                ? wordUsageFrequency[freq as keyof typeof wordUsageFrequency] // Ensure type assertion here
-                : null;
-
-        if (!wordFreq) {
-            wordFreq = 30; // fu
-        }
+                ? wordUsageFrequency[freq as keyof typeof wordUsageFrequency]
+                : 30; // fu
 
         const wordsCount = await prisma.noms.count({
             where: {
@@ -50,7 +46,7 @@ export async function POST(request: Request) {
         return Response.json({ message: "data" });
     } catch (err) {
         console.log(err);
-        return Response.json({ Error: err });
+        return Response.json({ error: err });
     }
 }
 
