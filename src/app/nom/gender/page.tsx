@@ -14,7 +14,7 @@ export default function Gender() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null | unknown>(null);
     const [fetchReq, setFetchReq] = useState<boolean>(false);
-    const [randomFreq, setRandomFreq] = useState(null);
+    // const [randomFreq, setRandomFreq] = useState(null);
 
     const wordUsageFrequency = ["uf", "vf", "fu", "ou"] as const;
 
@@ -24,9 +24,9 @@ export default function Gender() {
                 Math.floor(wordUsageFrequency.length * Math.random())
             ];
 
-        setRandomFreq(currentrandomFreq);
+        // setRandomFreq(currentrandomFreq);
 
-        console.log("random fer: ", randomFreq);
+        console.log("random fer: ", currentrandomFreq);
         if (fetchReq) {
             const getNewQuizSet = async () => {
                 setIsLoading(true);
@@ -64,7 +64,7 @@ export default function Gender() {
                     onClick={() => setFetchReq(true)}
                     className="bg-blue-500 hover:bg-blue-700"
                 >
-                    New Quiz Set of {randomFreq}
+                    New Quiz Set
                 </Button>
             </div>
             {resData && resData.data ? (
