@@ -1,3 +1,3 @@
-export default function Gender() {
-    return <h3>Gender</h3>;
-}
+// export default function Gender() {
+//     return <h3>Gender</h3>;
+// }
