@@ -16,8 +16,6 @@ export default function Gender() {
     const [fetchReq, setFetchReq] = useState<boolean>(false);
     // const [randomFreq, setRandomFreq] = useState(null);
 
-    const wordUsageFrequency = ["uf", "vf", "fu", "ou"] as const;
-
     useEffect(() => {
         // setRandomFreq(currentrandomFreq);
 
@@ -26,6 +24,12 @@ export default function Gender() {
                 setIsLoading(true);
                 setError(null);
                 try {
+                    const wordUsageFrequency = [
+                        "uf",
+                        "vf",
+                        "fu",
+                        "ou",
+                    ] as const;
                     const currentrandomFreq =
                         wordUsageFrequency[
                             Math.floor(
@@ -56,7 +60,7 @@ export default function Gender() {
             getNewQuizSet();
             setFetchReq(false);
         }
-    }, [fetchReq, wordUsageFrequency]);
+    }, [fetchReq]);
 
     return (
         <div className="flex flex-col h-screen   justify-center items-center">
